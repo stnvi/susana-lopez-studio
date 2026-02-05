@@ -96,8 +96,20 @@ export function useAuth() {
     }, [])
 
     const login = useCallback((email: string, password: string) => {
-        // Perfiles demo hardcoded (cualquier contraseña funciona)
+        // Perfiles demo hardcoded
         const demoProfiles = {
+            // --- AQUÍ AÑADIMOS AL ADMIN ---
+            'admin@susanalopez.com': {
+                name: 'Susana López',
+                role: 'admin' as const,
+                demoData: {
+                    // El admin no suele necesitar datos de bonos, pero lo dejamos vacío o a null
+                    bono: undefined,
+                    reservas: [],
+                    hasOnline: true
+                }
+            },
+            // -------------------------------
             'nuevo@demo.com': {
                 name: 'Usuario Nuevo',
                 role: 'client' as const,
@@ -134,10 +146,17 @@ export function useAuth() {
 
         // Verificar si es un perfil demo
         if (email in demoProfiles) {
+            // --- VALIDACIÓN DE CONTRASEÑA ESPECÍFICA PARA ADMIN ---
+            if (email === 'admin@susanalopez.com' && password !== '123456') {
+                return false // Denegar si la contraseña no es correcta
+            }
+            // ------------------------------------------------------
+
             const demoProfile = demoProfiles[email as keyof typeof demoProfiles]
             setIsAuthenticated(true)
             setUser({ name: demoProfile.name, email, role: demoProfile.role })
             setDemoData(demoProfile.demoData)
+
             // Guardar sesión en localStorage
             localStorage.setItem(STORAGE_KEY_SESSION, JSON.stringify({
                 name: demoProfile.name,
@@ -148,14 +167,14 @@ export function useAuth() {
             return true
         }
 
-        // Comportamiento normal para otros usuarios
+        // Comportamiento normal para otros usuarios (localStorage)
         const found = users.find(u => u.email === email && u.password === password)
         if (found) {
             const role = found.role || determineRole(email)
             setIsAuthenticated(true)
             setUser({ name: found.name, email, role })
             setDemoData(null)
-            // Guardar sesión en localStorage con nombre y rol
+
             localStorage.setItem(STORAGE_KEY_SESSION, JSON.stringify({
                 name: found.name,
                 email,
@@ -165,7 +184,6 @@ export function useAuth() {
         }
         return false
     }, [users])
-
     const logout = useCallback(() => {
         setIsAuthenticated(false)
         setUser(null)
