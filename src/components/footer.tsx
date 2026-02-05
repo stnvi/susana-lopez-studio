@@ -21,7 +21,7 @@ export default function Footer() {
               <h3 className="text-xl font-serif text-primary mb-6">SUSANA LÓPEZ STUDIO</h3>
 
               <a
-                href="https://share.google/qZl4jEQtIyX3ljKU5"
+                href="https://maps.app.goo.gl/9v1UVv8UHm1i2ASf8"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-start gap-3 hover:text-white transition-colors group"
