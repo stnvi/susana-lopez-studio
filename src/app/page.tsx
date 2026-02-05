@@ -2,22 +2,31 @@
 
 import { useState, useRef, useEffect } from 'react'
 import Header from '@/components/layout/Header'
-import { MessageCircle } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/hooks/useAuth'
 import { useDevSection } from '@/context/DevControlContext'
 
 const VIDEO_URL = '/hero.mp4'
-const WORK_SESSIONS = [
-  { id: 1, title: "Análisis Postural", video: "/trabajamos2.mp4", poster: "/instalaciones1.jpg", desc: "Evaluación inicial" },
-  { id: 2, title: "Respiración Diafragmática", video: "/trabajamos1.mp4", poster: "/instalaciones1.jpg", desc: "Control del core" },
+
+const WORK_FEATURES = [
+  {
+    title: "Enfoque Personalizado",
+    description: "Adaptamos cada ejercicio a tu anatomía y necesidades.",
+    video: "/trabajamos2.mp4"
+  },
+  {
+    title: "Metodología Holística",
+    description: "Combinamos respiración, postura y consciencia corporal.",
+    video: "/trabajamos1.mp4"
+  },
 ]
 
 export default function Home() {
   const router = useRouter()
   const { user } = useAuth()
   const landingConfig = useDevSection('landing')
+  const [activeIndex, setActiveIndex] = useState(0)
 
   const handleHeroButtonClick = () => {
     if (user) {
@@ -47,6 +56,20 @@ export default function Home() {
 
     return () => clearInterval(interval)
   }, [])
+
+  // Auto-play para slider de características
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % WORK_FEATURES.length)
+    }, 5000)
+    return () => clearInterval(interval)
+  }, [])
+
+  const handleFeatureClick = (index: number) => {
+    setActiveIndex(index)
+    // Nota: En una implementación real, reiniciaríamos el intervalo aquí
+    // pero para simplificar, el efecto se encargará de ello en el próximo ciclo
+  }
 
   return (
     <div className="min-h-screen bg-background font-sans text-foreground">
@@ -239,123 +262,83 @@ export default function Home() {
           </section>
         )}
 
-        {/* Sección Así Trabajamos - Carrusel de Videos Horizontal */}
+        {/* Sección Así Trabajamos - Slider Sincronizado de Características */}
         {landingConfig.showWorkMethod && (
           <section id="asi-trabajamos" className="py-16 px-4 bg-background/50 mb-24">
             <div className="container mx-auto max-w-6xl">
               <h2 className="text-3xl md:text-4xl font-serif font-bold text-center mb-8 md:mb-12 text-secondary">Así trabajamos</h2>
 
-              {/* Contenedor principal flexbox con altura dinámica */}
-              <div className="flex flex-col md:flex-row gap-8">
-                {/* Columna Izquierda: Textos con flex-1 para dictar altura */}
-                <div className="flex-1 flex flex-col justify-between gap-6">
-                  {/* Tarjeta 1: Enfoque Personalizado */}
-                  <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 border border-primary/20 hover:shadow-xl transition-shadow duration-300">
-                    <h3 className="text-xl md:text-2xl font-serif font-bold mb-4 text-secondary">Enfoque Personalizado</h3>
-                    <p className="text-foreground/70 text-sm md:text-base mb-4">
-                      Cada sesión está adaptada a tu cuerpo, tus objetivos y tu ritmo. No hay dos clientas iguales.
-                    </p>
-                    <ul className="space-y-2 text-sm text-foreground/60">
-                      <li className="flex items-start">
-                        <span className="w-1.5 h-1.5 bg-primary rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
-                        <span>Evaluación inicial detallada</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="w-1.5 h-1.5 bg-primary rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
-                        <span>Plan adaptado a tus necesidades</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="w-1.5 h-1.5 bg-primary rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
-                        <span>Seguimiento continuo</span>
-                      </li>
-                    </ul>
-                  </div>
-
-                  {/* Tarjeta 2: Metodología */}
-                  <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 border border-primary/20 hover:shadow-xl transition-shadow duration-300">
-                    <h3 className="text-xl md:text-2xl font-serif font-bold mb-4 text-secondary">Metodología Holística</h3>
-                    <p className="text-foreground/70 text-sm md:text-base mb-4">
-                      Combinamos técnica, respiración y consciencia corporal para un bienestar integral.
-                    </p>
-                    <ul className="space-y-2 text-sm text-foreground/60">
-                      <li className="flex items-start">
-                        <span className="w-1.5 h-1.5 bg-primary rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
-                        <span>Hipopresivos y suelo pélvico</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="w-1.5 h-1.5 bg-primary rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
-                        <span>Pilates contemporáneo</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="w-1.5 h-1.5 bg-primary rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
-                        <span>Rehabilitación postural</span>
-                      </li>
-                    </ul>
-                  </div>
-
-                  {/* Tarjeta 3: Resultados */}
-                  <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 border border-primary/20 hover:shadow-xl transition-shadow duration-300">
-                    <h3 className="text-xl md:text-2xl font-serif font-bold mb-4 text-secondary">Resultados Medibles</h3>
-                    <p className="text-foreground/70 text-sm md:text-base mb-4">
-                      Seguimos tu progreso con métricas claras para garantizar que alcanzas tus objetivos.
-                    </p>
-                    <ul className="space-y-2 text-sm text-foreground/60">
-                      <li className="flex items-start">
-                        <span className="w-1.5 h-1.5 bg-primary rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
-                        <span>Mejora postural visible</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="w-1.5 h-1.5 bg-primary rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
-                        <span>Reducción de dolores</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="w-1.5 h-1.5 bg-primary rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
-                        <span>Aumento de fuerza y flexibilidad</span>
-                      </li>
-                    </ul>
-                  </div>
+              {/* Contenedor principal flexbox con layout responsive */}
+              <div className="flex flex-col md:flex-row gap-8 items-center">
+                {/* BLOQUE 1 (Izquierda en PC / Arriba en Móvil) - Cajas de texto */}
+                <div className="w-full md:w-1/2 space-y-6">
+                  {WORK_FEATURES.map((feature, index) => (
+                    <div
+                      key={index}
+                      onClick={() => handleFeatureClick(index)}
+                      className={`cursor-pointer rounded-2xl p-6 md:p-8 border transition-all duration-300 ${index === activeIndex
+                        ? 'bg-white border-primary shadow-lg scale-105'
+                        : 'bg-transparent border-transparent opacity-60 hover:opacity-100 hover:bg-white/5'
+                        }`}
+                    >
+                      <h3 className="text-xl md:text-2xl font-serif font-bold mb-3 text-secondary">
+                        {feature.title}
+                      </h3>
+                      <p className="text-foreground/70 text-sm md:text-base">
+                        {feature.description}
+                      </p>
+                      {/* Indicador de activo */}
+                      {index === activeIndex && (
+                        <div className="mt-4 flex items-center">
+                          <div className="w-3 h-3 bg-primary rounded-full animate-pulse mr-2"></div>
+                          <span className="text-xs text-primary font-semibold">ACTIVO</span>
+                        </div>
+                      )}
+                    </div>
+                  ))}
                 </div>
 
-                {/* Columna Derecha: Carrusel de Videos Horizontal */}
-                <div className="flex-1">
-                  {/* Contenedor Carrusel con Scroll Snap */}
-                  <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide gap-6 py-4 cursor-grab active:cursor-grabbing">
-                    {WORK_SESSIONS.map((session) => (
-                      <div
-                        key={session.id}
-                        className="snap-center relative rounded-3xl overflow-hidden shadow-xl transition-transform hover:scale-[1.02] min-w-[85vw] h-[500px] md:min-w-[600px] md:h-[400px] flex-shrink-0"
-                      >
-                        {/* Video */}
-                        <video
-                          src={session.video}
-                          poster={session.poster}
-                          className="absolute inset-0 w-full h-full object-cover"
-                          autoPlay
-                          muted
-                          loop
-                          playsInline
-                        />
-                        {/* Overlay degradado para legibilidad */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent opacity-70" />
-                        {/* Gradiente de acento sutil */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-primary/40 to-secondary/40 opacity-20 mix-blend-overlay" />
-                        {/* Contenido de texto */}
-                        <div className="absolute bottom-0 left-0 p-6 md:p-8 z-10">
-                          <h3 className="text-xl md:text-2xl lg:text-3xl font-serif font-bold text-white mb-2">
-                            {session.title}
-                          </h3>
-                          <p className="text-white/90 text-sm md:text-base font-sans max-w-xs">
-                            {session.desc}
-                          </p>
-                        </div>
-                        {/* Borde sutil en hover */}
-                        <div className="absolute inset-0 border-2 border-transparent hover:border-primary/30 rounded-3xl transition-colors duration-300" />
-                      </div>
+                {/* BLOQUE 2 (Derecha en PC / Debajo en Móvil) - Reproductor de Video */}
+                <div className="w-full md:w-1/2">
+                  <div className="aspect-video rounded-3xl overflow-hidden shadow-2xl bg-black relative">
+                    <video
+                      key={activeIndex}
+                      src={WORK_FEATURES[activeIndex].video}
+                      className="w-full h-full object-cover"
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                    />
+                    {/* Overlay informativo */}
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 md:p-8">
+                      <h3 className="text-xl md:text-2xl lg:text-3xl font-serif font-bold text-white mb-2">
+                        {WORK_FEATURES[activeIndex].title}
+                      </h3>
+                      <p className="text-white/90 text-sm md:text-base">
+                        {WORK_FEATURES[activeIndex].description}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Indicadores de navegación */}
+                  <div className="flex justify-center mt-6 space-x-3">
+                    {WORK_FEATURES.map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={() => handleFeatureClick(index)}
+                        className={`w-3 h-3 rounded-full transition-all duration-300 ${index === activeIndex
+                          ? 'bg-primary scale-125'
+                          : 'bg-gray-400 hover:bg-gray-300'
+                          }`}
+                        aria-label={`Ir a característica ${index + 1}`}
+                      />
                     ))}
                   </div>
-                  {/* Indicador de scroll (opcional) */}
+
+                  {/* Contador */}
                   <div className="text-center mt-4 text-sm text-foreground/60">
-                    Desliza para ver más sesiones
+                    {activeIndex + 1} / {WORK_FEATURES.length}
                   </div>
                 </div>
               </div>

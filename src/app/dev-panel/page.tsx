@@ -1,15 +1,41 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useDevControl } from '@/context/DevControlContext'
 
 type TabType = 'system' | 'landing' | 'services' | 'dashboard' | 'admin'
 
+const ACCESS_PASSWORD = "DeV2001$"
+
 export default function DevPanelPage() {
+    // Estados de autenticación
+    const [isAuthorized, setIsAuthorized] = useState(false)
+    const [passwordInput, setPasswordInput] = useState('')
+    const [error, setError] = useState(false)
+
+    // Estados del panel
     const { config, updateConfig, resetToDefaults, clearLocalStorage } = useDevControl()
     const [activeTab, setActiveTab] = useState<TabType>('system')
     const [showConfirm, setShowConfirm] = useState(false)
     const [showToast, setShowToast] = useState(false)
+
+    // Efecto para persistencia en sesión (para no pedirla cada F5)
+    useEffect(() => {
+        const sessionAuth = sessionStorage.getItem('dev_panel_auth')
+        if (sessionAuth === 'true') setIsAuthorized(true)
+    }, [])
+
+    const handleLogin = (e: React.FormEvent) => {
+        e.preventDefault()
+        if (passwordInput === ACCESS_PASSWORD) {
+            setIsAuthorized(true)
+            sessionStorage.setItem('dev_panel_auth', 'true')
+            setError(false)
+        } else {
+            setError(true)
+            // Vibración o feedback visual
+        }
+    }
 
     const handleToggle = (section: keyof typeof config, key: string, value: boolean) => {
         updateConfig({
@@ -401,6 +427,64 @@ export default function DevPanelPage() {
         )
     }
 
+    // Renderizado condicional: Puerta de acceso vs Panel
+    if (!isAuthorized) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-gray-950 text-white p-4">
+                <div className="max-w-md w-full text-center space-y-8">
+                    {/* Icono grande */}
+                    <div className="text-8xl animate-pulse">🔒</div>
+
+                    {/* Título */}
+                    <div>
+                        <h1 className="text-3xl md:text-4xl font-bold mb-2 text-pink-400">
+                            ÁREA RESTRINGIDA / GOD MODE
+                        </h1>
+                        <p className="text-gray-400 text-sm">
+                            Acceso exclusivo para desarrolladores autorizados
+                        </p>
+                    </div>
+
+                    {/* Formulario de acceso */}
+                    <form onSubmit={handleLogin} className="space-y-6">
+                        <div>
+                            <input
+                                type="password"
+                                value={passwordInput}
+                                onChange={(e) => setPasswordInput(e.target.value)}
+                                placeholder="Introduce la contraseña de acceso"
+                                className="w-full px-6 py-4 bg-gray-900 border border-gray-700 rounded-xl text-center text-lg placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                                autoFocus
+                            />
+                        </div>
+
+                        {/* Mensaje de error */}
+                        {error && (
+                            <div className="text-red-400 font-bold animate-shake">
+                                ⚠️ Acceso Denegado: Credenciales Inválidas
+                            </div>
+                        )}
+
+                        {/* Botón de desbloqueo */}
+                        <button
+                            type="submit"
+                            className="w-full px-8 py-4 bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white font-bold rounded-xl transition-all duration-300 hover:scale-105 active:scale-95 shadow-2xl"
+                        >
+                            🚀 DESBLOQUEAR SISTEMA
+                        </button>
+                    </form>
+
+                    {/* Información adicional */}
+                    <div className="text-gray-500 text-xs pt-8 border-t border-gray-800">
+                        <p>🔐 Esta ruta (/dev-panel) está protegida por contraseña.</p>
+                        <p className="mt-1">💾 La autenticación persiste durante la sesión del navegador.</p>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    // Panel autorizado - contenido original
     return (
         <div className="min-h-screen bg-gray-900 text-gray-100 font-mono p-4 md:p-8">
             <div className="max-w-6xl mx-auto">
