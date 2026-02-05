@@ -11,21 +11,30 @@ interface User {
     name: string
     email: string
     plan: string
-    status: 'active' | 'pending'
+    status: 'Conectada' | 'Desconectada'
     paymentStatus: 'paid' | 'pending'
     lastPayment: string
     totalSpent: number
 }
 
+interface ClassSession {
+    id: number
+    day: number
+    students: number
+    max: number
+    time: string
+    active: boolean
+}
+
 const INITIAL_USERS: User[] = [
-    { id: 1, name: 'Laura Martínez', email: 'laura@example.com', plan: 'Premium Mensual', status: 'active', paymentStatus: 'paid', lastPayment: '2026-02-01', totalSpent: 85.00 },
-    { id: 2, name: 'Ana García', email: 'ana@example.com', plan: 'Bono 10 Clases', status: 'active', paymentStatus: 'pending', lastPayment: '2026-01-15', totalSpent: 250.00 },
-    { id: 3, name: 'Sofía López', email: 'sofia@example.com', plan: 'Online Trimestral', status: 'active', paymentStatus: 'paid', lastPayment: '2026-02-03', totalSpent: 149.99 },
-    { id: 4, name: 'Elena Rodríguez', email: 'elena@example.com', plan: 'Presencial Suelto', status: 'pending', paymentStatus: 'pending', lastPayment: '2026-01-20', totalSpent: 25.00 },
-    { id: 5, name: 'María Fernández', email: 'maria@example.com', plan: 'Premium Anual', status: 'active', paymentStatus: 'paid', lastPayment: '2026-02-01', totalSpent: 999.00 },
-    { id: 6, name: 'Carla Ruiz', email: 'carla@example.com', plan: 'Bono 5 Clases', status: 'active', paymentStatus: 'pending', lastPayment: '2026-01-28', totalSpent: 125.00 },
-    { id: 7, name: 'Patricia Gómez', email: 'patricia@example.com', plan: 'Online Mensual', status: 'active', paymentStatus: 'paid', lastPayment: '2026-02-02', totalSpent: 49.99 },
-    { id: 8, name: 'Isabel Sánchez', email: 'isabel@example.com', plan: 'Presencial Suelto', status: 'pending', paymentStatus: 'pending', lastPayment: '2026-01-25', totalSpent: 25.00 },
+    { id: 1, name: 'Laura Martínez', email: 'laura@example.com', plan: 'Premium Mensual', status: 'Conectada', paymentStatus: 'paid', lastPayment: '2026-02-01', totalSpent: 85.00 },
+    { id: 2, name: 'Ana García', email: 'ana@example.com', plan: 'Bono 10 Clases', status: 'Conectada', paymentStatus: 'pending', lastPayment: '2026-01-15', totalSpent: 250.00 },
+    { id: 3, name: 'Sofía López', email: 'sofia@example.com', plan: 'Online Trimestral', status: 'Desconectada', paymentStatus: 'paid', lastPayment: '2026-02-03', totalSpent: 149.99 },
+    { id: 4, name: 'Elena Rodríguez', email: 'elena@example.com', plan: 'Presencial Suelto', status: 'Desconectada', paymentStatus: 'pending', lastPayment: '2026-01-20', totalSpent: 25.00 },
+    { id: 5, name: 'María Fernández', email: 'maria@example.com', plan: 'Premium Anual', status: 'Desconectada', paymentStatus: 'paid', lastPayment: '2026-02-01', totalSpent: 999.00 },
+    { id: 6, name: 'Carla Ruiz', email: 'carla@example.com', plan: 'Bono 5 Clases', status: 'Desconectada', paymentStatus: 'pending', lastPayment: '2026-01-28', totalSpent: 125.00 },
+    { id: 7, name: 'Patricia Gómez', email: 'patricia@example.com', plan: 'Online Mensual', status: 'Desconectada', paymentStatus: 'paid', lastPayment: '2026-02-02', totalSpent: 49.99 },
+    { id: 8, name: 'Isabel Sánchez', email: 'isabel@example.com', plan: 'Presencial Suelto', status: 'Desconectada', paymentStatus: 'pending', lastPayment: '2026-01-25', totalSpent: 25.00 },
 ]
 
 export default function AdminPage() {
@@ -44,6 +53,23 @@ export default function AdminPage() {
         password: ''
     })
     const [selectedUserIds, setSelectedUserIds] = useState<number[]>([])
+    const [openMenuId, setOpenMenuId] = useState<number | null>(null)
+    const [classes, setClasses] = useState<ClassSession[]>([
+        { id: 1, day: 2, students: 8, max: 10, time: '10:00', active: true },
+        { id: 2, day: 5, students: 10, max: 10, time: '12:00', active: true },
+        { id: 3, day: 7, students: 6, max: 10, time: '16:00', active: true },
+        { id: 4, day: 9, students: 9, max: 10, time: '18:00', active: true },
+        { id: 5, day: 12, students: 10, max: 10, time: '10:00', active: true },
+        { id: 6, day: 14, students: 7, max: 10, time: '12:00', active: true },
+        { id: 7, day: 16, students: 8, max: 10, time: '16:00', active: true },
+        { id: 8, day: 19, students: 5, max: 10, time: '18:00', active: true },
+        { id: 9, day: 21, students: 10, max: 10, time: '10:00', active: true },
+        { id: 10, day: 23, students: 6, max: 10, time: '12:00', active: true },
+        { id: 11, day: 26, students: 10, max: 10, time: '16:00', active: true },
+        { id: 12, day: 28, students: 8, max: 10, time: '18:00', active: true },
+        { id: 13, day: 30, students: 7, max: 10, time: '10:00', active: true },
+    ])
+    const [selectedClass, setSelectedClass] = useState<ClassSession | null>(null)
 
     const handleLogout = () => {
         logout()
@@ -69,7 +95,7 @@ export default function AdminPage() {
     }
 
     // KPIs
-    const activeUsers = users.filter(u => u.status === 'active').length
+    const activeUsers = users.filter(u => u.status === 'Conectada').length
     const pendingPayments = users.filter(u => u.paymentStatus === 'pending').length
     const totalRevenue = users.reduce((sum, u) => sum + u.totalSpent, 0)
     const avgRevenuePerUser = activeUsers > 0 ? totalRevenue / activeUsers : 0
@@ -128,7 +154,7 @@ export default function AdminPage() {
 
     const handleActivateUser = (userId: number) => {
         setUsers(prev => prev.map(user =>
-            user.id === userId ? { ...user, status: 'active' } : user
+            user.id === userId ? { ...user, status: 'Conectada' } : user
         ))
         const userName = users.find(u => u.id === userId)?.name || 'Usuario'
         alert(`Usuario ${userName} activado`)
@@ -171,6 +197,28 @@ export default function AdminPage() {
         showNotification('✅ Perfil actualizado correctamente')
         setIsEditProfileModalOpen(false)
         // Aquí normalmente se enviaría a una API
+    }
+
+    // Funciones para gestión de clases del calendario
+    const handleCancelClass = (classId: number) => {
+        setClasses(prev => prev.map(c =>
+            c.id === classId ? { ...c, active: false } : c
+        ))
+        showNotification('🗑️ Clase anulada')
+        setSelectedClass(null)
+    }
+
+    const handleMoveClass = (classId: number, newDay: number) => {
+        if (newDay < 1 || newDay > 31) {
+            alert('El día debe estar entre 1 y 31')
+            return
+        }
+        
+        setClasses(prev => prev.map(c =>
+            c.id === classId ? { ...c, day: newDay } : c
+        ))
+        showNotification(`📅 Clase movida al día ${newDay}`)
+        setSelectedClass(null)
     }
 
     return (
@@ -277,16 +325,7 @@ export default function AdminPage() {
                                 </div>
                             )}
                             <div className="flex gap-2 md:gap-3">
-                                {adminConfig.tools.showExportBtn && (
-                                    <button className="px-3 py-2 md:px-4 md:py-2 bg-secondary text-white rounded-lg hover:bg-secondary/90 transition-colors text-xs md:text-sm">
-                                        Exportar CSV
-                                    </button>
-                                )}
-                                {adminConfig.tools.showCreateBtn && (
-                                    <button className="px-3 py-2 md:px-4 md:py-2 bg-primary text-secondary rounded-lg hover:bg-primary-dark transition-colors shadow-lg text-xs md:text-sm">
-                                        Nueva Alumna
-                                    </button>
-                                )}
+                                {/* Botones eliminados para demo */}
                             </div>
                         </div>
                     </div>
@@ -383,11 +422,19 @@ export default function AdminPage() {
                                         )}
                                         {adminConfig.table.showStatusCol && (
                                             <td className="px-3 md:px-4 lg:px-6 py-3 md:py-4 whitespace-nowrap">
-                                                <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${user.status === 'active'
-                                                    ? 'bg-primary/20 text-primary'
-                                                    : 'bg-secondary/20 text-secondary'
+                                                <span className={`px-2 py-1 inline-flex items-center text-xs leading-5 font-semibold rounded-full ${user.status === 'Conectada'
+                                                    ? 'bg-emerald-100 text-emerald-700'
+                                                    : 'bg-gray-100 text-gray-500'
                                                     }`}>
-                                                    {user.status === 'active' ? 'Activa' : 'Pendiente'}
+                                                    {user.status === 'Conectada' ? (
+                                                        <>
+                                                            <span className="relative flex h-2 w-2 mr-1">
+                                                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                                                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                                                            </span>
+                                                            Conectada
+                                                        </>
+                                                    ) : 'Desconectada'}
                                                 </span>
                                             </td>
                                         )}
@@ -407,54 +454,82 @@ export default function AdminPage() {
                                             </td>
                                         )}
                                         {adminConfig.table.showActionsCol && (
-                                            <td className="px-3 md:px-4 lg:px-6 py-3 md:py-4 whitespace-nowrap text-xs md:text-sm font-medium">
-                                                <div className="flex flex-wrap gap-1 md:gap-2">
-                                                    {user.paymentStatus === 'pending' && adminConfig.actions.showConfirmPaymentBtn && adminConfig.allowEdit && (
-                                                        <button
-                                                            onClick={() => handleConfirmPayment(user.id)}
-                                                            className="px-2 py-1 bg-green-600 hover:bg-green-700 text-white text-xs rounded-lg transition-colors"
-                                                        >
-                                                            Confirmar Pago
-                                                        </button>
-                                                    )}
-                                                    {adminConfig.actions.showGiftClassBtn && adminConfig.allowEdit && (
-                                                        <button
-                                                            onClick={() => handleGiftClass(user.id)}
-                                                            className="px-2 py-1 bg-primary hover:bg-primary-dark text-secondary text-xs rounded-lg transition-colors"
-                                                        >
-                                                            Regalar Clase
-                                                        </button>
-                                                    )}
-                                                    {adminConfig.actions.showEditClassBtn && adminConfig.allowEdit && (
-                                                        <button
-                                                            onClick={() => handleEditClass(user.id)}
-                                                            className="px-2 py-1 bg-secondary hover:bg-secondary/90 text-white text-xs rounded-lg transition-colors flex items-center gap-1"
-                                                        >
-                                                            <span>✏️</span> Editar Clase
-                                                        </button>
-                                                    )}
-                                                    {user.status === 'pending' && adminConfig.actions.showActivateBtn && adminConfig.allowEdit && (
-                                                        <button
-                                                            onClick={() => handleActivateUser(user.id)}
-                                                            className="px-2 py-1 bg-secondary hover:bg-secondary/90 text-white text-xs rounded-lg transition-colors"
-                                                        >
-                                                            Activar
-                                                        </button>
-                                                    )}
-                                                    {adminConfig.actions.showDeleteBtn && adminConfig.allowDelete && (
-                                                        <button
-                                                            onClick={() => {
-                                                                if (confirm(`¿Eliminar a ${user.name}? Esta acción no se puede deshacer.`)) {
-                                                                    setUsers(prev => prev.filter(u => u.id !== user.id))
-                                                                    showNotification(`🗑️ ${user.name} eliminada`)
-                                                                }
-                                                            }}
-                                                            className="px-2 py-1 bg-red-600 hover:bg-red-700 text-white text-xs rounded-lg transition-colors"
-                                                        >
-                                                            Eliminar
-                                                        </button>
-                                                    )}
+                                            <td className="px-3 md:px-4 lg:px-6 py-3 md:py-4 whitespace-nowrap text-xs md:text-sm font-medium relative">
+                                                <div className="flex justify-end">
+                                                    <button
+                                                        onClick={() => setOpenMenuId(openMenuId === user.id ? null : user.id)}
+                                                        className="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs rounded-lg transition-colors flex items-center gap-1"
+                                                    >
+                                                        Acciones
+                                                        <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+                                                        </svg>
+                                                    </button>
                                                 </div>
+
+                                                {openMenuId === user.id && (
+                                                    <>
+                                                        {/* Overlay para cerrar al hacer click fuera */}
+                                                        <div
+                                                            className="fixed inset-0 z-40"
+                                                            onClick={() => setOpenMenuId(null)}
+                                                        />
+
+                                                        <div className="absolute right-0 mt-2 z-50 bg-white border border-gray-100 shadow-xl rounded-lg w-48 overflow-hidden">
+                                                            {user.paymentStatus === 'pending' && adminConfig.actions.showConfirmPaymentBtn && adminConfig.allowEdit && (
+                                                                <button
+                                                                    onClick={() => {
+                                                                        handleConfirmPayment(user.id)
+                                                                        setOpenMenuId(null)
+                                                                    }}
+                                                                    className="w-full text-left px-4 py-2 hover:bg-gray-50 text-sm flex items-center gap-2"
+                                                                >
+                                                                    <span className="text-green-600">✓</span>
+                                                                    Confirmar Pago
+                                                                </button>
+                                                            )}
+                                                            {adminConfig.actions.showGiftClassBtn && adminConfig.allowEdit && (
+                                                                <button
+                                                                    onClick={() => {
+                                                                        handleGiftClass(user.id)
+                                                                        setOpenMenuId(null)
+                                                                    }}
+                                                                    className="w-full text-left px-4 py-2 hover:bg-gray-50 text-sm flex items-center gap-2"
+                                                                >
+                                                                    <span className="text-primary">🎁</span>
+                                                                    Regalar Clase
+                                                                </button>
+                                                            )}
+                                                            {adminConfig.actions.showEditClassBtn && adminConfig.allowEdit && (
+                                                                <button
+                                                                    onClick={() => {
+                                                                        handleEditClass(user.id)
+                                                                        setOpenMenuId(null)
+                                                                    }}
+                                                                    className="w-full text-left px-4 py-2 hover:bg-gray-50 text-sm flex items-center gap-2"
+                                                                >
+                                                                    <span>✏️</span>
+                                                                    Editar Clase
+                                                                </button>
+                                                            )}
+                                                            {adminConfig.actions.showDeleteBtn && adminConfig.allowDelete && (
+                                                                <button
+                                                                    onClick={() => {
+                                                                        if (confirm(`¿Eliminar a ${user.name}? Esta acción no se puede deshacer.`)) {
+                                                                            setUsers(prev => prev.filter(u => u.id !== user.id))
+                                                                            showNotification(`🗑️ ${user.name} eliminada`)
+                                                                            setOpenMenuId(null)
+                                                                        }
+                                                                    }}
+                                                                    className="w-full text-left px-4 py-2 hover:bg-gray-50 text-sm flex items-center gap-2 text-red-600"
+                                                                >
+                                                                    <span>🗑️</span>
+                                                                    Eliminar
+                                                                </button>
+                                                            )}
+                                                        </div>
+                                                    </>
+                                                )}
                                             </td>
                                         )}
                                     </tr>
@@ -501,30 +576,45 @@ export default function AdminPage() {
                 {/* --- SECCIÓN DE ACCIONES Y ESTADÍSTICAS --- */}
                 {/* AHORA CABLEADO CORRECTAMENTE CON LOS FLAGS DEL DEV PANEL */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-8 md:mb-10">
-                    
-                    {/* Tarjeta 1: Acciones Masivas */}
-                    {adminConfig.bulkActions.showBulkActionsSection && (
-                        <div className="bg-secondary rounded-xl shadow-lg p-4 md:p-6 border border-primary/30">
-                            <h3 className="text-lg md:text-xl font-bold text-white mb-3 md:mb-4">Acciones Masivas</h3>
-                            <div className="space-y-2 md:space-y-3">
-                                {adminConfig.bulkActions.showPaymentReminderBtn && (
-                                    <button className="w-full px-3 py-2 md:px-4 md:py-3 bg-primary text-secondary font-medium rounded-lg hover:bg-primary-dark transition-colors shadow-lg text-sm md:text-base">
-                                        Enviar Recordatorio de Pago
-                                    </button>
-                                )}
-                                {adminConfig.bulkActions.showMonthlyReportBtn && (
-                                    <button className="w-full px-3 py-2 md:px-4 md:py-3 bg-white text-secondary border-2 border-primary font-medium rounded-lg hover:bg-primary/10 transition-colors text-sm md:text-base">
-                                        Generar Reporte Mensual
-                                    </button>
-                                )}
-                                {adminConfig.bulkActions.showUpdatePlansBtn && (
-                                    <button className="w-full px-3 py-2 md:px-4 md:py-3 bg-white text-secondary border-2 border-primary font-medium rounded-lg hover:bg-primary/10 transition-colors text-sm md:text-base">
-                                        Actualizar Planes
-                                    </button>
-                                )}
-                            </div>
+
+                    {/* CALENDARIO INTERACTIVO */}
+                    <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 mb-8">
+                        <div className="flex justify-between items-center mb-4">
+                            <h3 className="font-semibold text-gray-800">Calendario de Ocupación - Octubre 2026</h3>
+                            <span className="text-sm text-gray-500">Vista Mensual</span>
                         </div>
-                    )}
+                        <div className="grid grid-cols-7 gap-2 text-center text-sm mb-2">
+                            {['L', 'M', 'X', 'J', 'V', 'S', 'D'].map(d => (
+                                <div key={d} className="font-bold text-gray-400">{d}</div>
+                            ))}
+                        </div>
+                        <div className="grid grid-cols-7 gap-2">
+                            {Array.from({ length: 31 }, (_, i) => {
+                                const day = i + 1;
+                                const classSession = classes.find(c => c.day === day && c.active);
+                                const isFull = classSession && classSession.students >= classSession.max;
+                                const hasClass = !!classSession;
+                                
+                                return (
+                                    <div
+                                        key={day}
+                                        onClick={() => classSession && setSelectedClass(classSession)}
+                                        className={`h-10 flex flex-col items-center justify-center rounded-lg border cursor-pointer transition-all ${isFull ? 'bg-red-50 border-red-200 hover:bg-red-100' : hasClass ? 'bg-green-50 border-green-200 hover:bg-green-100' : 'bg-gray-50 border-transparent hover:bg-gray-100'
+                                            }`}
+                                    >
+                                        <span className={`text-xs font-medium ${isFull ? 'text-red-700' : hasClass ? 'text-green-700' : 'text-gray-500'}`}>
+                                            {day}
+                                        </span>
+                                        {hasClass && (
+                                            <div className="text-[10px] mt-0.5 font-semibold">
+                                                {classSession.students}/{classSession.max}
+                                            </div>
+                                        )}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
 
                     {/* Tarjeta 2: Estadísticas Rápidas */}
                     {adminConfig.bulkActions.showQuickStatsSection && (
@@ -722,6 +812,84 @@ export default function AdminPage() {
                                     className="flex-1 px-3 py-2 md:px-4 md:py-3 bg-primary text-secondary font-medium rounded-lg hover:bg-primary-dark transition-colors shadow-lg text-sm md:text-base"
                                 >
                                     Guardar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {/* Modal de Gestión de Clase del Calendario */}
+                {selectedClass && (
+                    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+                        <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-4 md:p-6 border border-primary/30 mx-4">
+                            <div className="flex justify-between items-center mb-4 md:mb-6">
+                                <h2 className="text-xl md:text-2xl font-bold text-secondary">Gestión de Clase</h2>
+                                <button
+                                    onClick={() => setSelectedClass(null)}
+                                    className="text-secondary/50 hover:text-secondary text-xl md:text-2xl"
+                                >
+                                    ×
+                                </button>
+                            </div>
+                            <div className="space-y-4 md:space-y-5">
+                                <div className="bg-gray-50 p-4 rounded-lg">
+                                    <h3 className="font-semibold text-gray-800 mb-2">Clase del día {selectedClass.day} - {selectedClass.time}</h3>
+                                    <div className="grid grid-cols-2 gap-3">
+                                        <div>
+                                            <p className="text-sm text-gray-600">Ocupación</p>
+                                            <p className={`text-lg font-bold ${selectedClass.students >= selectedClass.max ? 'text-red-600' : 'text-green-600'}`}>
+                                                {selectedClass.students}/{selectedClass.max}
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p className="text-sm text-gray-600">Estado</p>
+                                            <p className="text-lg font-bold text-primary">
+                                                {selectedClass.active ? 'Activa' : 'Inactiva'}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-medium text-secondary mb-2">
+                                        Mover al día (1-31)
+                                    </label>
+                                    <div className="flex gap-2">
+                                        <input
+                                            type="number"
+                                            min="1"
+                                            max="31"
+                                            defaultValue={selectedClass.day}
+                                            id="moveDay"
+                                            className="flex-1 px-3 py-2 border border-primary/30 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary text-sm"
+                                        />
+                                        <button
+                                            onClick={() => {
+                                                const input = document.getElementById('moveDay') as HTMLInputElement
+                                                const newDay = parseInt(input.value)
+                                                handleMoveClass(selectedClass.id, newDay)
+                                            }}
+                                            className="px-4 py-2 bg-primary text-secondary font-medium rounded-lg hover:bg-primary-dark transition-colors"
+                                        >
+                                            Mover
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="flex gap-2 md:gap-3 mt-6 md:mt-8">
+                                <button
+                                    type="button"
+                                    onClick={() => setSelectedClass(null)}
+                                    className="flex-1 px-3 py-2 md:px-4 md:py-3 border-2 border-primary text-secondary font-medium rounded-lg hover:bg-primary/10 transition-colors text-sm md:text-base"
+                                >
+                                    Cerrar
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => handleCancelClass(selectedClass.id)}
+                                    className="flex-1 px-3 py-2 md:px-4 md:py-3 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition-colors shadow-lg text-sm md:text-base"
+                                >
+                                    Anular Clase
                                 </button>
                             </div>
                         </div>
