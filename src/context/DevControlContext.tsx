@@ -202,6 +202,259 @@ const DEFAULT_CONFIG: DevControlConfig = {
     }
 }
 
+// Presets predefinidos para enlaces cortos
+const PRESETS: Record<string, Partial<DevControlConfig>> = {
+    'demo': { // El escenario perfecto para la venta
+        system: {
+            maintenanceMode: false,
+            enableAuthBypass: false,
+            enablePayments: true,
+        },
+        landing: {
+            showHero: true,
+            showServicesPreview: true,
+            showHipoPilates: true,
+            showWorkMethod: true,
+            showInstallations: true,
+            showTestimonials: true,
+            showFooter: true,
+        },
+        services: {
+            showTabPresencial: true,
+            showTabOnline: true,
+            highlightNewBadge: true,
+            allowBooking: true,
+        },
+        dashboard: {
+            showPromoBanner: true,
+            showMetrics: true,
+            showCalendar: true,
+            allowCancellation: true,
+        },
+        admin: {
+            allowDelete: true,
+            allowEdit: true,
+            showRevenue: true,
+            allowBulkActions: true,
+            layout: {
+                showHeader: true,
+                showHomeLink: true,
+                showTitle: true,
+                showSubtitle: true,
+                showEditProfileBtn: true,
+                showLogoutBtn: true,
+                showNotificationToast: true,
+                showFooter: true,
+            },
+            widgets: {
+                showActiveUsersCard: true,
+                showPendingPaymentsCard: true,
+                showRevenueCard: true,
+                showAvgRevenueCard: true,
+            },
+            tools: {
+                showSearch: true,
+                showExportBtn: true,
+                showCreateBtn: true,
+            },
+            table: {
+                showStudentCol: true,
+                showPlanCol: true,
+                showStatusCol: true,
+                showPaymentCol: true,
+                showRevenueCol: true,
+                showActionsCol: true,
+                showTableFooter: true,
+            },
+            actions: {
+                showConfirmPaymentBtn: true,
+                showGiftClassBtn: true,
+                showEditClassBtn: true,
+                showActivateBtn: true,
+                showDeleteBtn: true,
+            },
+            bulkActions: {
+                showBulkActionsSection: true,
+                showPaymentReminderBtn: true,
+                showMonthlyReportBtn: true,
+                showUpdatePlansBtn: true,
+                showQuickStatsSection: true,
+                showUpcomingTasksSection: true,
+            },
+            modals: {
+                showEditProfileModal: true,
+                showEditClassModal: true,
+            },
+        }
+    },
+    'minimal': { // Para mostrar cómo desaparecen cosas
+        system: {
+            maintenanceMode: false,
+            enableAuthBypass: false,
+            enablePayments: true,
+        },
+        landing: {
+            showHero: true,
+            showServicesPreview: false, // Oculto
+            showHipoPilates: false, // Oculto
+            showWorkMethod: true,
+            showInstallations: false,
+            showTestimonials: false,
+            showFooter: true,
+        },
+        services: {
+            showTabPresencial: false,
+            showTabOnline: true,
+            highlightNewBadge: false,
+            allowBooking: false,
+        },
+        dashboard: {
+            showPromoBanner: false,
+            showMetrics: false,
+            showCalendar: false,
+            allowCancellation: false,
+        },
+        admin: {
+            allowDelete: false,
+            allowEdit: false,
+            showRevenue: false,
+            allowBulkActions: false,
+            layout: {
+                showHeader: true,
+                showHomeLink: true,
+                showTitle: true,
+                showSubtitle: true,
+                showEditProfileBtn: false,
+                showLogoutBtn: true,
+                showNotificationToast: false,
+                showFooter: true,
+            },
+            widgets: {
+                showActiveUsersCard: false,
+                showPendingPaymentsCard: false,
+                showRevenueCard: false,
+                showAvgRevenueCard: false,
+            },
+            tools: {
+                showSearch: false,
+                showExportBtn: false,
+                showCreateBtn: false,
+            },
+            table: {
+                showStudentCol: true,
+                showPlanCol: true,
+                showStatusCol: false,
+                showPaymentCol: false,
+                showRevenueCol: false,
+                showActionsCol: false,
+                showTableFooter: false,
+            },
+            actions: {
+                showConfirmPaymentBtn: false,
+                showGiftClassBtn: false,
+                showEditClassBtn: false,
+                showActivateBtn: false,
+                showDeleteBtn: false,
+            },
+            bulkActions: {
+                showBulkActionsSection: false,
+                showPaymentReminderBtn: false,
+                showMonthlyReportBtn: false,
+                showUpdatePlansBtn: false,
+                showQuickStatsSection: false,
+                showUpcomingTasksSection: false,
+            },
+            modals: {
+                showEditProfileModal: false,
+                showEditClassModal: false,
+            },
+        }
+    },
+    'maintenance': { // Modo mantenimiento
+        system: {
+            maintenanceMode: true,
+            enableAuthBypass: false,
+            enablePayments: false,
+        },
+        landing: {
+            showHero: false,
+            showServicesPreview: false,
+            showHipoPilates: false,
+            showWorkMethod: false,
+            showInstallations: false,
+            showTestimonials: false,
+            showFooter: false,
+        },
+        services: {
+            showTabPresencial: false,
+            showTabOnline: false,
+            highlightNewBadge: false,
+            allowBooking: false,
+        },
+        dashboard: {
+            showPromoBanner: false,
+            showMetrics: false,
+            showCalendar: false,
+            allowCancellation: false,
+        },
+        admin: {
+            allowDelete: false,
+            allowEdit: false,
+            showRevenue: false,
+            allowBulkActions: false,
+            layout: {
+                showHeader: false,
+                showHomeLink: false,
+                showTitle: false,
+                showSubtitle: false,
+                showEditProfileBtn: false,
+                showLogoutBtn: false,
+                showNotificationToast: false,
+                showFooter: false,
+            },
+            widgets: {
+                showActiveUsersCard: false,
+                showPendingPaymentsCard: false,
+                showRevenueCard: false,
+                showAvgRevenueCard: false,
+            },
+            tools: {
+                showSearch: false,
+                showExportBtn: false,
+                showCreateBtn: false,
+            },
+            table: {
+                showStudentCol: false,
+                showPlanCol: false,
+                showStatusCol: false,
+                showPaymentCol: false,
+                showRevenueCol: false,
+                showActionsCol: false,
+                showTableFooter: false,
+            },
+            actions: {
+                showConfirmPaymentBtn: false,
+                showGiftClassBtn: false,
+                showEditClassBtn: false,
+                showActivateBtn: false,
+                showDeleteBtn: false,
+            },
+            bulkActions: {
+                showBulkActionsSection: false,
+                showPaymentReminderBtn: false,
+                showMonthlyReportBtn: false,
+                showUpdatePlansBtn: false,
+                showQuickStatsSection: false,
+                showUpcomingTasksSection: false,
+            },
+            modals: {
+                showEditProfileModal: false,
+                showEditClassModal: false,
+            },
+        }
+    }
+}
+
 // Tipo del contexto
 interface DevControlContextType {
     config: DevControlConfig
@@ -239,8 +492,44 @@ export function DevControlProvider({ children }: DevControlProviderProps) {
 
     // Cargar configuración desde URL o localStorage al montar
     useEffect(() => {
-        // 1. Verificar si hay parámetro demoConfig en la URL
         const searchParams = new URLSearchParams(window.location.search)
+
+        // 1. Verificar si hay parámetro preset en la URL (enlaces cortos)
+        const presetParam = searchParams.get('preset')
+
+        if (presetParam && PRESETS[presetParam]) {
+            try {
+                const presetConfig = PRESETS[presetParam]
+
+                // Merge con defaults para asegurar que todas las propiedades existan
+                const mergedConfig = {
+                    ...DEFAULT_CONFIG,
+                    ...presetConfig,
+                    system: { ...DEFAULT_CONFIG.system, ...presetConfig.system },
+                    landing: { ...DEFAULT_CONFIG.landing, ...presetConfig.landing },
+                    services: { ...DEFAULT_CONFIG.services, ...presetConfig.services },
+                    dashboard: { ...DEFAULT_CONFIG.dashboard, ...presetConfig.dashboard },
+                    admin: { ...DEFAULT_CONFIG.admin, ...presetConfig.admin },
+                }
+
+                // Sobrescribir estado
+                setConfig(mergedConfig)
+
+                // Guardar en localStorage inmediatamente
+                localStorage.setItem('god_mode_config', JSON.stringify(mergedConfig))
+
+                // Limpiar la URL visualmente sin recargar
+                window.history.replaceState({}, '', window.location.pathname)
+
+                console.log(`✅ Configuración cargada desde preset: ${presetParam}`)
+                return // Salir, no cargar de localStorage ni demoConfig
+            } catch (error) {
+                console.error('Error al cargar preset:', error)
+                // Continuar con carga normal
+            }
+        }
+
+        // 2. Verificar si hay parámetro demoConfig en la URL (enlaces largos legacy)
         const demoConfigParam = searchParams.get('demoConfig')
 
         if (demoConfigParam) {
@@ -277,7 +566,7 @@ export function DevControlProvider({ children }: DevControlProviderProps) {
             }
         }
 
-        // 2. Si no hay demoConfig, cargar de localStorage
+        // 3. Si no hay preset ni demoConfig, cargar de localStorage
         const savedConfig = localStorage.getItem('god_mode_config')
         if (savedConfig) {
             try {

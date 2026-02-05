@@ -86,6 +86,25 @@ export default function DevPanelPage() {
         }
     }
 
+    const handleCopyPresetLink = async (presetName: string) => {
+        try {
+            // Construir URL con parámetro preset
+            const presetLink = `${window.location.origin}/?preset=${presetName}`
+
+            // Copiar al portapapeles
+            await navigator.clipboard.writeText(presetLink)
+
+            // Mostrar toast
+            setShowToast(true)
+            setTimeout(() => setShowToast(false), 3000)
+
+            console.log(`🔗 Preset Link copiado (${presetName}):`, presetLink)
+        } catch (error) {
+            console.error('Error al copiar Preset Link:', error)
+            alert('Error al copiar el link. Por favor, inténtalo de nuevo.')
+        }
+    }
+
     const tabs: { id: TabType; label: string; icon: string }[] = [
         { id: 'system', label: 'SISTEMA', icon: '⚙️' },
         { id: 'landing', label: 'LANDING', icon: '🏠' },
@@ -554,7 +573,7 @@ export default function DevPanelPage() {
                 </div>
 
                 {/* Actions */}
-                <div className="bg-gray-800 border border-gray-700 rounded-xl p-6">
+                <div className="bg-gray-800 border border-gray-700 rounded-xl p-6 mb-8">
                     <h2 className="text-xl font-bold text-white mb-4">⚠️ Acciones del Sistema</h2>
                     <div className="flex flex-wrap gap-4">
                         <button
@@ -591,6 +610,71 @@ export default function DevPanelPage() {
                         >
                             🏠 Volver al Inicio
                         </button>
+                    </div>
+                </div>
+
+                {/* Presets Rápidos */}
+                <div className="bg-gray-800 border border-gray-700 rounded-xl p-6 mb-8">
+                    <h2 className="text-xl font-bold text-white mb-4">🚀 Presets Rápidos (Enlaces Cortos)</h2>
+                    <p className="text-gray-400 mb-6">
+                        Genera enlaces cortos y limpios para compartir configuraciones predefinidas. 
+                        Ideal para demostraciones rápidas sin URLs largas.
+                    </p>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div className="bg-gradient-to-br from-green-900/30 to-green-800/20 border border-green-700/30 rounded-xl p-5">
+                            <h3 className="text-lg font-bold text-green-400 mb-2">🎯 Demo Perfecta</h3>
+                            <p className="text-gray-300 text-sm mb-4">
+                                Escenario ideal para ventas: todas las funcionalidades visibles y activas.
+                            </p>
+                            <button
+                                onClick={() => handleCopyPresetLink('demo')}
+                                className="w-full px-4 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors font-bold flex items-center justify-center gap-2"
+                            >
+                                📋 Copiar Link Demo
+                            </button>
+                            <p className="text-gray-400 text-xs mt-2 text-center">
+                                <code className="bg-gray-900 px-2 py-1 rounded">/?preset=demo</code>
+                            </p>
+                        </div>
+
+                        <div className="bg-gradient-to-br from-blue-900/30 to-blue-800/20 border border-blue-700/30 rounded-xl p-5">
+                            <h3 className="text-lg font-bold text-blue-400 mb-2">🧹 Minimalista</h3>
+                            <p className="text-gray-300 text-sm mb-4">
+                                Muestra cómo desaparecen cosas: solo lo esencial visible.
+                            </p>
+                            <button
+                                onClick={() => handleCopyPresetLink('minimal')}
+                                className="w-full px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-bold flex items-center justify-center gap-2"
+                            >
+                                📋 Copiar Link Minimal
+                            </button>
+                            <p className="text-gray-400 text-xs mt-2 text-center">
+                                <code className="bg-gray-900 px-2 py-1 rounded">/?preset=minimal</code>
+                            </p>
+                        </div>
+
+                        <div className="bg-gradient-to-br from-red-900/30 to-red-800/20 border border-red-700/30 rounded-xl p-5">
+                            <h3 className="text-lg font-bold text-red-400 mb-2">🔧 Mantenimiento</h3>
+                            <p className="text-gray-300 text-sm mb-4">
+                                Modo mantenimiento: todo oculto excepto mensaje de mantenimiento.
+                            </p>
+                            <button
+                                onClick={() => handleCopyPresetLink('maintenance')}
+                                className="w-full px-4 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors font-bold flex items-center justify-center gap-2"
+                            >
+                                📋 Copiar Link Mantenimiento
+                            </button>
+                            <p className="text-gray-400 text-xs mt-2 text-center">
+                                <code className="bg-gray-900 px-2 py-1 rounded">/?preset=maintenance</code>
+                            </p>
+                        </div>
+                    </div>
+                    <div className="mt-6 pt-6 border-t border-gray-700">
+                        <p className="text-gray-400 text-sm">
+                            💡 <strong>Ventaja vs Magic Link:</strong> Los presets generan URLs cortas y legibles 
+                            (<code className="bg-gray-900 px-2 py-1 rounded text-xs">/?preset=demo</code>) 
+                            en lugar de URLs largas con Base64.
+                        </p>
                     </div>
                 </div>
 
