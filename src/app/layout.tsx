@@ -20,8 +20,8 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Susana López Studio",
-  description: "Hipopilates & Suelo Pélvico - Estudio boutique en Salamanca",
+  title: "Susana López Studio | HipoPilates & Suelo Pélvico",
+  description: "Estudio especializado en salud integral de la mujer, hipopresivos y Pilates en Salamanca. Recupera tu bienestar.",
 };
 
 export default function RootLayout({
