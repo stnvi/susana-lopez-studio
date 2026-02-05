@@ -32,7 +32,7 @@ export default function Home() {
     if (user) {
       router.push('/services')
     } else {
-      router.push('/login')
+      router.push('/register')
     }
   }
 

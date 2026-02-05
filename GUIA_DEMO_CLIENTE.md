@@ -1,90 +1,112 @@
-# 🎯 Guía de Demostración - Susana López Studio
+# 🎯 Guion de Demostración - Susana López Studio
+*Guía estructurada para presentar la versatilidad de la plataforma usando los 4 perfiles de acceso*
 
-## 1. 🎯 La Visión (Elevator Pitch)
+---
 
-Esta plataforma transforma tu negocio de **"dar clases"** a **"gestionar un estudio digital escalable"**. Ya no eres solo una instructora de HipoPilates; eres la directora de una experiencia premium donde cada alumna encuentra su camino personalizado, desde la primera visita a la web hasta la reserva de clases, el seguimiento de progreso y la gestión administrativa. La plataforma automatiza lo tedioso (reservas, pagos, comunicación) para que tú puedas enfocarte en lo que mejor haces: transformar vidas a través del movimiento consciente.
+## 📋 La Tabla de Credenciales (El "Chuletario")
 
-## 2. 🔑 Credenciales de Acceso (Chuletario para la Demo)
-
-| Rol | Email | Contraseña | URL |
-|-----|-------|------------|-----|
-| **Admin** | `admin@susanalopezstudio.com` | `123456` | [Panel de Administración](https://susana-lopez-studio.vercel.app/admin) |
-| **Usuario Demo (Full)** | `full@demo.com` | `123456` | [Dashboard Cliente](https://susana-lopez-studio.vercel.app/dashboard) |
-| **God Mode** | N/A | PIN: `DeV2001$` | [Dev Panel](https://susana-lopez-studio.vercel.app/dev-panel) |
+| Perfil | Email | Contraseña | Características |
+|--------|-------|------------|-----------------|
+| **ADMIN** | `admin@susanalopez.com` | `123456` | Control total del negocio, gestión de usuarias, ingresos, acciones masivas. |
+| **PERFIL 1 (NUEVO)** | `nuevo@demo.com` | `123456` | Sin bonos, sin cursos. Dashboard vacío que invita a la compra. |
+| **PERFIL 2 (HÍBRIDO)** | `presencial@demo.com` | `123456` | Con bonos activos para clases físicas, sin cursos online. |
+| **PERFIL 3 (PREMIUM)** | `full@demo.com` | `123456` | Todo desbloqueado: Bonos + Academia Online + Reservas. |
+| **GOD MODE** | Acceso: `/dev-panel` | PIN: `DeV2001$` | Control en tiempo real de la web (apagar/encender secciones). |
 
 **URL principal:** https://susana-lopez-studio.vercel.app
 
-## 3. 🚶‍♂️ El Tour Guiado (Paso a Paso para la Reunión)
+---
 
-### Fase 1: La Atracción (Landing Page)
-1. **Hero Video** – Impacto visual inmediato con video de fondo profesional que transmite la esencia del método.
-2. **Sección "Así Trabajamos"** – Slider sincronizado texto/video que demuestra profesionalidad y atención al detalle.
-3. **Footer Inteligente** – Se adapta automáticamente: completo en páginas públicas, minimalista en login/admin (sin distracciones).
+## 🎤 El Guion de la Demo (Storytelling)
 
-### Fase 2: La Conversión (CTA)
-1. **Botón "ÚNETE AL EQUIPO"** – Para nuevas usuarias: lleva a registro.
-2. **Botón "ÁREA CLIENTA"** – Para alumnas existentes: acceso directo al dashboard.
-   *Diferencia clara entre captación y fidelización.*
+### Escenario A: La Captación (Usuario Público)
+**Objetivo:** Mostrar cómo la web atrae y convierte a nuevas clientas.
 
-### Fase 3: La Experiencia (Dashboard)
-1. **Acceder como `full@demo.com`** – Credenciales arriba.
-2. **Academia Online (Netflix style)** – Catálogo de videos organizado por niveles, con progreso visual.
-3. **Reserva de Clases** – Calendario interactivo con slots disponibles, confirmación instantánea.
-4. **Perfil Personal** – Historial de sesiones, métricas de progreso, facturación.
+1. **Landing Page – Impacto visual**
+   - **Hero Video**: "Mira cómo el video de fondo transmite profesionalidad y emoción desde el primer segundo."
+   - **Slider "Así Trabajamos"**: "Este slider sincronizado texto/video demuestra que no eres una instructora más; eres una experta con metodología propia."
 
-### Fase 4: El Control (Admin Panel)
-1. **Acceder como `admin@susanalopezstudio.com`**.
-2. **Gestión de Usuarias** – Listado, filtros, edición de perfiles.
-3. **KPIs y Ingresos** – Gráficos de crecimiento, ingresos mensuales, ocupación.
-4. **Acciones Masivas** – Envío de comunicaciones, gestión de grupos, programación de clases.
+2. **CTA Inteligente**
+   - **Botón "ÚNETE AL EQUIPO"**: "Para quien aún no te conoce: la invita a registrarse y descubrir tu mundo."
+   - **Botón "ÁREA CLIENTA"**: "Para tu alumnado actual: acceso directo a su área personal. **La web distingue entre captación y fidelización automáticamente.**"
 
-### Fase 5: El "Factor Wow" (God Mode)
-1. **Navegar a `/dev-panel`** – Introducir PIN: `DeV2001$`.
+### Escenario B: La Experiencia Personalizada (Login con los 3 perfiles)
+**Objetivo:** Demostrar que el sistema se adapta a cada tipo de clienta.
+
+1. **Perfil 1 – `nuevo@demo.com` (NUEVO)**
+   - **Dashboard vacío**: "Mira, la plataforma detecta que aún no ha comprado nada y le muestra invitaciones a tus servicios. **La web vende por ti a quien aún no es cliente.**"
+   - **Call‑to‑action destacado**: "Aquí puede comprar su primer bono o suscribirse a la academia online."
+
+2. **Perfil 2 – `presencial@demo.com` (HÍBRIDO)**
+   - **Reservas físicas**: "Ve sus bonos activos, las clases que ha reservado esta semana, el historial de asistencia."
+   - **Argumento clave**: "**Gestión automática de tu estudio físico.** La plataforma le recuerda las clases, libera plazas si no viene, y tú no pierdes tiempo en llamadas o WhatsApp."
+
+3. **Perfil 3 – `full@demo.com` (PREMIUM)**
+   - **Academia Online (Netflix‑style)**: "Catálogo completo de videos organizados por niveles, con progreso visual. Ella puede entrenar a las 3 a.m. si quiere."
+   - **Argumento clave**: "**Tu negocio escala digitalmente sin límite de horario ni de espacio.** Mientras duermes, la plataforma genera ingresos recurrentes."
+
+### Escenario C: El Control Total (Admin Panel)
+**Objetivo:** Enseñar cómo gestionas todo el negocio desde un solo panel.
+
+1. **Acceder como `admin@susanalopez.com`**.
+2. **Listado de usuarias**: "Filtra por tipo, fecha de registro, estado de suscripción."
+3. **KPIs de ingresos**: "Gráficos de crecimiento, ingresos mensuales, ocupación del estudio."
+4. **Acciones masivas**: "Envía un anuncio a todas las alumnas de hipopresivos en dos clics. Programa una promoción de verano que se active automáticamente."
+5. **Mensaje final**: "**Tú mandas, la plataforma ejecuta.**"
+
+### Escenario D: La Seguridad (God Mode)
+**Objetivo:** Sorprender con el control técnico absoluto.
+
+1. **Navegar a `/dev-panel`** e introducir PIN `DeV2001$`.
 2. **Demostración en vivo**:
    - Apagar la sección "Servicios" (toggle `showServicesPreview`).
    - Recargar la página en el móvil (o simular vista móvil en el navegador).
    - **¡La sección desaparece al instante!**
-3. **Mensaje clave**: "Tienes control total sobre cada elemento de tu web, sin depender de un desarrollador. Puedes activar/desactivar secciones según campañas, temporadas o pruebas A/B."
-
-## 4. 🛠️ Fortaleza Técnica (Argumentos de Venta)
-
-### 🚀 Velocidad
-- **Next.js 15** – Renderizado híbrido (SSR + CSR) para máxima velocidad.
-- **Optimización de imágenes** – Automática con Next.js Image.
-- **Carga en < 2s** – Critical CSS, code splitting, lazy loading.
-
-### 🔒 Seguridad
-- **Autenticación JWT** – Tokens seguros, sesiones persistentes.
-- **Protección de rutas** – Middleware que verifica roles (admin, user, public).
-- **Validación de formularios** – En frontend y backend.
-
-### 📈 Escalabilidad
-- **Arquitectura modular** – Fácil añadir nuevos módulos (e‑commerce, blog, foro).
-- **API RESTful** – Lista para conectar con Stripe (pagos), Mailchimp (email), Google Calendar.
-- **Base de datos PostgreSQL** – Relacional, ACID, backups automáticos.
-
-### 🔍 SEO Optimizado
-- **Metadatos dinámicos** – Títulos y descripciones por página.
-- **Favicon personalizado** – Identidad de marca en cada pestaña.
-- **Sitemap.xml y robots.txt** – Generados automáticamente.
-
-### 📱 Mobile‑First
-- **Diseño 100% responsive** – Tailwind CSS, breakpoints cuidados.
-- **Touch‑friendly** – Botones grandes, gestos de swipe en carruseles.
-- **PWA ready** – Instalable como app nativa en iOS/Android.
+3. **Argumento de venta**: "**Tienes control total sobre cada elemento de tu web, sin depender de un desarrollador.** Puedes activar/desactivar secciones según campañas, temporadas o pruebas A/B. Esto es poder real."
 
 ---
 
-## ✨ Puntos Clave para la Venta
+## 💼 Cierre de Venta – Beneficios Técnicos que Venden
 
-1. **No es una web, es un sistema** – Gestiona todo tu estudio desde un solo panel.
-2. **Ahorra tiempo** – Automatiza reservas, recordatorios, facturación.
-3. **Aumenta ingresos** – Upsell con academia online, merchandising, workshops.
-4. **Control total** – Modifica tu web en tiempo real sin tocar código.
-5. **Listo para crecer** – Desde 10 a 10.000 alumnas, la plataforma escala contigo.
+### 🔒 **Seguridad**
+- Autenticación JWT con tokens seguros.
+- Protección de rutas por roles (admin, user, público).
+- Validación de formularios en frontend y backend.
+
+### 🚀 **Velocidad (Next.js 15)**
+- Renderizado híbrido (SSR + CSR) para máxima velocidad.
+- Carga en < 2 s gracias a Critical CSS, code splitting y lazy loading.
+- Optimización automática de imágenes.
+
+### 📈 **Escalabilidad**
+- Arquitectura modular: añade e‑commerce, blog, foro sin tocar el núcleo.
+- API RESTful lista para conectar con Stripe (pagos), Mailchimp (email), Google Calendar.
+- Base de datos PostgreSQL (ACID, backups automáticos).
+
+### 🔍 **SEO Optimizado**
+- Metadatos dinámicos por página.
+- Sitemap.xml y robots.txt generados automáticamente.
+- Estructura semántica HTML5 para mejor posicionamiento.
+
+### 📱 **Mobile‑First**
+- Diseño 100% responsive (Tailwind CSS).
+- Touch‑friendly: botones grandes, gestos de swipe.
+- PWA ready (instalable como app nativa).
+
+---
+
+## ✨ **Resumen de la Oferta**
+
+1. **No es una web, es un sistema** que gestiona todo tu estudio desde un solo panel.
+2. **Ahorra tiempo** automatizando reservas, recordatorios, facturación.
+3. **Aumenta ingresos** con upsell (academia online, merchandising, workshops).
+4. **Control total** – modifica tu web en tiempo real sin tocar código.
+5. **Listo para crecer** – desde 10 a 10.000 alumnas, la plataforma escala contigo.
 
 ---
 
 **Fecha de creación:** 5 de febrero de 2026  
 **Última actualización:** 5 de febrero de 2026  
 **Responsable:** Equipo de Desarrollo Susana López Studio
+
+> **Nota para el comercial:** Este guion está diseñado para una demostración de 30‑45 minutos. Sigue el orden de escenarios y usa los argumentos en negrita para enfatizar los beneficios que más importan a la clienta.
